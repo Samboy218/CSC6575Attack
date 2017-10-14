@@ -1,7 +1,7 @@
 from scapy.all import *
 
 def pkt_callback(packet):
-    if (packet in TCP):
+    if (TCP in packet):
         packet.show()
 
 interface = "ens10"
