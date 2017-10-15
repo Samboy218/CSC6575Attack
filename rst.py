@@ -5,7 +5,7 @@ target_ip = "192.168.13.30"
 
 def pkt_callback(packet):
     if (TCP in packet):
-        print("seq: %d, ack: %d\n" % packet[TCP].seq, packet[TCP].ack)
+        print("seq: %d, ack: %d\n" % (packet[TCP].seq, packet[TCP].ack))
         if (packet[IP].dst == ""):
             resetPkt = packet
             #set reset packet
