@@ -7,6 +7,7 @@ def pkt_callback(packet):
         if (packet[IP].dst == target_ip):
             resetPkt = packet
             resetPkt[TCP].flags = 'R'
+            resetPkt.show()
             sendp(resetPkt)
 
 
