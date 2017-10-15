@@ -12,7 +12,7 @@ def pkt_callback(packet):
             ack = resetPkt[TCP].ack
             dst = resetPkt[IP].dst
             src = resetPkt[IP].src
-            resetPkt[TCP].ack = seq
+            resetPkt[TCP].ack = resetPkt[TCP].seq
             resetPkt[IP].src = dst
             resetPkt[IP].dst = src
             window = resetPkt[TCP].window
