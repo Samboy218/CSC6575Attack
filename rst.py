@@ -23,7 +23,7 @@ def pkt_callback(packet):
             resetPkt[TCP].ack = ack
             resetPkt[IP].src = dst
             resetPkt[IP].dst = src
-            send(resetPkt)
+            sendp(resetPkt)
 
 
 random.seed()
