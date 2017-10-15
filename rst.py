@@ -5,14 +5,17 @@ target_ip = "192.168.13.30"
 
 def pkt_callback(packet):
     if (TCP in packet):
-        print("%s -> %s\n" % (packet[IP].src, packet[IP].dst))
+        print("%s -> %s" % (packet[IP].src, packet[IP].dst))
         print("len: %d" % packet[IP].len)
-        print("seq: %d, ack: %d\n" % (packet[TCP].seq, packet[TCP].ack))
+        print("seq: %d, ack: %d" % (packet[TCP].seq, packet[TCP].ack))
+        print("next seq: %d, next ack: %d" % (packet[TCP].ack, packet[TCP].seq + len(packet[RAW])))
         if (packet[IP].dst == ""):
             resetPkt = packet
             #set reset packet
             resetPkt[TCP].flags = 'R'
             #set ack number
+            #the seq number should be whatever was last acked
+            #the ack number should be whatever the last seq was + len of data
             ack = resetPkt[TCP].ack
             dst = resetPkt[IP].dst
             src = resetPkt[IP].src
