@@ -1,2 +1,10 @@
+This repo can be used to perform TCP reset attacks on clients.
+arpPoison.py: ARP poisoning will poison two hosts and allow you to see the traffic between hosts.
+    this will take two IP addresses (on the current subnet), and it will poison the ARP cache of both
+rst.py: this is what performs the actual RST attack.
+    rst will sniff traffic, and when it sees a TCP packet, it will try to inject a RST packet
+
+
 dont forget to do 
 sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+    this allows your computer to forward traffic, so ARP poisoning will not interrupt communication
